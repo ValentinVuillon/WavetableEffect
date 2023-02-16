@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 from scipy.io.wavfile import write
 from scipy.io import wavfile
 
-#version accelerée du code
 
 sample_number=2048
 waveform_number=256
