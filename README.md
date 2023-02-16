@@ -1,6 +1,6 @@
 -the wavetable which will be processed needs to be in the same folder as the .py file and needs to have the following name: "wavetable_input.wav"
 -the code does the convolution product between the wavetable and a kernel. 
-There are 3 avilable kernel:
+There are 3 available kernel:
 kernel 1: the pixel value at the position (x,y) in the output wavetable is the average of the pixels in a square around the position (x,y) 
 kernel 2: the pixel value at the position (x,y) in the output wavetable is the average of the pixels in a square around the position (x,y) , weighted with a bell curve. This is a Gaussian Blur
 kernel 3: edge detection
