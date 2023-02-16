@@ -26,7 +26,7 @@ fig = plt.figure()
 plt.imshow(wavetable)
 plt.show() 
 
-#be careful, choose a square kernel with  odd size
+#choose a square kernel with  odd size
 
 kernel_number=1
 
