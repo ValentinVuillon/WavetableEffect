@@ -26,7 +26,7 @@ fig = plt.figure()
 plt.imshow(wavetable)
 plt.show() 
 
-#attention, choisir un kernel à la taille impaire. Attention il doit être carré.
+#be careful, choose a square kernel with  odd size
 
 kernel_number=1
 
@@ -70,44 +70,44 @@ plt.show()
 
 size_added_to_one_side=100
 wavetable_filtered=np.zeros([waveform_number,sample_number])
-wavetable_elargie=np.ones([waveform_number+size_added_to_one_side*2,sample_number+size_added_to_one_side*2])
+large_wavetable=np.ones([waveform_number+size_added_to_one_side*2,sample_number+size_added_to_one_side*2])
 
-wavetable_elargie[size_added_to_one_side:size_added_to_one_side+waveform_number,size_added_to_one_side:size_added_to_one_side+sample_number]=wavetable[:,:]
+large_wavetable[size_added_to_one_side:size_added_to_one_side+waveform_number,size_added_to_one_side:size_added_to_one_side+sample_number]=wavetable[:,:]
 
 
 # fig = plt.figure()
-# plt.imshow(wavetable_elargie)
+# plt.imshow(large_wavetable)
 # plt.show() 
 
 for i in range(size_added_to_one_side,size_added_to_one_side+waveform_number):
     for j in range(0, size_added_to_one_side):
-        wavetable_elargie[i,j]=wavetable[i-size_added_to_one_side,0]
+        large_wavetable[i,j]=wavetable[i-size_added_to_one_side,0]
         
 for i in range(size_added_to_one_side,size_added_to_one_side+waveform_number):
     for j in range(sample_number+size_added_to_one_side,sample_number+2*size_added_to_one_side):
-        wavetable_elargie[i,j]=wavetable[i-size_added_to_one_side,sample_number-1]
+        large_wavetable[i,j]=wavetable[i-size_added_to_one_side,sample_number-1]
         
 for i in range(0,size_added_to_one_side):
     for j in range(size_added_to_one_side,size_added_to_one_side+sample_number):
-        wavetable_elargie[i,j]=wavetable[0,j-size_added_to_one_side]
+        large_wavetable[i,j]=wavetable[0,j-size_added_to_one_side]
         
 for i in range(size_added_to_one_side+waveform_number,size_added_to_one_side+waveform_number+size_added_to_one_side):
     for j in range(size_added_to_one_side,size_added_to_one_side+sample_number):
-        wavetable_elargie[i,j]=wavetable[waveform_number-1,j-size_added_to_one_side]
+        large_wavetable[i,j]=wavetable[waveform_number-1,j-size_added_to_one_side]
         
 
-def multiply_and_sum(wavetable_elargie,kernel,i,j):
-    function_multiplied_by_kernel=np.multiply(wavetable_elargie[i+size_added_to_one_side-halfsize:i+size_added_to_one_side+halfsize+1, j+size_added_to_one_side-halfsize:j+size_added_to_one_side+halfsize+1],kernel)
+def multiply_and_sum(large_wavetable,kernel,i,j):
+    function_multiplied_by_kernel=np.multiply(large_wavetable[i+size_added_to_one_side-halfsize:i+size_added_to_one_side+halfsize+1, j+size_added_to_one_side-halfsize:j+size_added_to_one_side+halfsize+1],kernel)
     return np.sum(function_multiplied_by_kernel)/kernel_nb_elements
 
 
 fig = plt.figure()
-plt.imshow(wavetable_elargie)
+plt.imshow(large_wavetable)
 plt.show() 
 
 for i in range(waveform_number):
     for j in range(sample_number):
-       wavetable_filtered[i,j]=multiply_and_sum(wavetable_elargie,kernel,i,j)
+       wavetable_filtered[i,j]=multiply_and_sum(large_wavetable,kernel,i,j)
         
         
 fig = plt.figure() 
@@ -115,22 +115,17 @@ plt.imshow(wavetable_filtered)
 plt.show() 
         
 
-#je cree le fichier .wav
-wav=np.ones(sample_number*waveform_number, dtype='float32') #dtype='float32' permet d'avoir des fichiers lisibles par ableton, ableton wavetable mais ça ne sert pas le cas de serum,
-#ne pas mettre la commande crée des fichiers 64 bit que serum arrive à lire
+#the .wav is created
+wav=np.ones(sample_number*waveform_number, dtype='float32') #dtype='float32' is import for ableton to read the files.
+#but serum is ok with reading 64 bit files so it's not necessary to use the command for serum
 
 for i in range(waveform_number):
     for j in range(sample_number):
         wav[j+i*sample_number]=wavetable_filtered[i][j]
 
-rate = 44100 #c'est sans importance
+rate = 44100 # any number can be used
 
 write('wavetable_result.wav', rate, wav)
 
-#consignes d'importation:
-#serum: importer avec decoupe tous les 2048 samples
-#ableton wavetable: importer puis mettre option "raw"
-
-        
         
         
