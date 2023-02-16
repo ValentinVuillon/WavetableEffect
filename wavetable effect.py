@@ -123,7 +123,7 @@ for i in range(waveform_number):
     for j in range(sample_number):
         wav[j+i*sample_number]=wavetable_filtered[i][j]
 
-rate = 44100 #je peux mettre n'importe quoi, c'est sans importance
+rate = 44100 #c'est sans importance
 
 write('wavetable_result.wav', rate, wav)
 
