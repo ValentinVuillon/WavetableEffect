@@ -1,3 +1,5 @@
+Note: You need to be able to run a python code to use this tool!
+
 -the wavetable which will be processed needs to be in the same folder as the .py file and needs to have the following name: "wavetable_input.wav"
 -the code does the convolution product between the wavetable and a kernel. 
 There are 3 available kernel:
